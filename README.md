@@ -234,3 +234,26 @@ SNOWFLAKE_PAT="$(cat .pat_token)" .venv/bin/python -m pytest tests/ -v
 - **Observability.** Every recommendation persists a replayable trace, and every
   served prediction feeds an **ML Observability model monitor** (drift / volume /
   statistics, segmented by market).
+
+---
+
+## References & further reading
+
+Snowflake Online Feature Store (Postgres) preview — the capabilities this demo
+is built on:
+
+- **[Stream Feature Views](https://docs.snowflake.com/en/LIMITEDACCESS/online-feature-store-preview#stream-feature-views)** —
+  ingest raw event streams directly through a REST API and use Python UDF
+  transformations to compute fresh features in under two seconds from ingest to
+  serving. *(Powers the fake-play → real-time recommendation loop in this demo.)*
+- **[Real-Time Feature Views](https://docs.snowflake.com/en/LIMITEDACCESS/online-feature-store-preview#real-time-feature-views)** —
+  compute features on the fly using data available at request time (e.g. current
+  transaction amount, device context, session metadata). Combine derived features
+  from upstream feature views with request-time inputs, or apply post-processing
+  before serving.
+- **[Feature Groups](https://docs.snowflake.com/en/LIMITEDACCESS/online-feature-store-preview#feature-groups)** —
+  logically group related views for consistent management and reuse across
+  training and inference. *(This demo's `PLAYER_REC_FG` groups the ranker's
+  features.)*
+- **[Snowflake Feature Store Quickstart (Online Feature Store on Postgres)](https://github.com/snowflake-labs/sf-samples/blob/main/samples/ml/feature_store/online_feature_store_postgres_quickstart.ipynb)** —
+  end-to-end notebook walkthrough of the Online Feature Store.
