@@ -1,0 +1,30 @@
+spec:
+  containers:
+    - name: orchestrator
+      image: /PLAYNOVA_RECS_DEMO/APP/PLAYNOVA_REPO/orchestrator:latest
+      env:
+        PLAYNOVA_DB: PLAYNOVA_RECS_DEMO
+        PLAYNOVA_WH: COMPUTE_WH
+        MODEL_VERSION: ranker-v1
+        PORT: "8080"
+        # OFS_QUERY_URL and SNOWFLAKE_PAT are injected from a Snowflake secret at deploy time.
+      secrets:
+        - snowflakeSecret: PLAYNOVA_RECS_DEMO.APP.OFS_PAT
+          envVarName: SNOWFLAKE_PAT
+          secretKeyRef: secret_string
+      resources:
+        requests:
+          memory: 2Gi
+          cpu: "1"
+        limits:
+          memory: 4Gi
+          cpu: "2"
+      readinessProbe:
+        port: 8080
+        path: /health
+  endpoints:
+    - name: api
+      port: 8080
+      public: true
+  networkPolicyConfig:
+    allowInternetEgress: false

@@ -1,0 +1,13 @@
+snowflake-ml-python>=1.41
+snowflake-snowpark-python
+xgboost==2.1.3
+scikit-learn
+pandas
+pyarrow
+numpy
+httpx
+cairosvg
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+requests==2.32.3
+pytest
